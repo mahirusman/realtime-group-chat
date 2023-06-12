@@ -1,0 +1,51 @@
+{
+  "name": "hutfin",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "stg": "cp .env.stg .env && nodemon ./bin/www",
+    "start:local": "cp .env.testing .env && nodemon ./bin/www",
+    "start:dev": "cp .env.dev .env && nodemon ./bin/www",
+    "start:stg": "cp .env.stg .env && nodemon ./bin/www",
+    "start:prod": "cp .env.prod .env && nodemon ./bin/www",
+    "dev": "cp .env.dev .env && nodemon ./bin/www",
+    "test": "cp .env.testing .env && mocha ./app/User/__test__/*.spec.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
+    "eth-sig-util": "^3.0.1",
+    "express": "~4.16.1",
+    "express-query-parser": "^1.3.3",
+    "http-errors": "~1.6.3",
+    "joi": "^17.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "jwt-decode": "^3.1.2",
+    "luxon": "^3.3.0",
+    "mongoose": "^6.8.1",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.8.0",
+    "nodemon": "^2.0.20",
+    "socket.io": "^4.6.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "rewire": "^6.0.0",
+    "serverless-plugin-typescript": "^2.1.4",
+    "supertest": "^6.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://projects.renesistech.com/mern/hutfin/hutfin-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

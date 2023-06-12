@@ -1,0 +1,36 @@
+stages:
+  - deploy
+Development:
+  stage: deploy
+  tags:
+    - hutfin
+  script:
+    - docker stop hutfin-chat-dev-c && docker rm hutfin-chat-dev-c 
+    - docker build . -t hutfin-chat-dev
+    - docker run -d --name hutfin-chat-dev-c -p 6097:3000 hutfin-chat-dev
+  only:
+    - development
+
+Staging:
+  stage: deploy
+  tags:
+    - hutfin
+  script:
+    - sed -i "s/dev/stg/g" Dockerfile
+    - docker stop hutfin-chat-stg-c && docker rm hutfin-chat-stg-c
+    - docker build . -t hutfin-chat-stg
+    - docker run -d --name hutfin-chat-stg-c -p 6098:3000 hutfin-chat-stg
+  only:
+    - staging
+
+Production Deploy:
+  stage: deploy
+  tags:
+    - hutfin
+  script:
+    - sed -i "s/dev/prod/g" Dockerfile
+    - docker stop hutfin-chat-c && docker rm hutfin-chat-c 
+    - docker build . -t hutfin-chat
+    - docker run -d --name hutfin-chat-c -p 6098:3000 hutfin-chat
+  only:
+    - production
