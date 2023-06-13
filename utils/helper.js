@@ -56,6 +56,21 @@ module.exports = {
       next();
     });
   },
+
+  isValidToken: (JWTtoken) => {
+    if (!JWTtoken) {
+      return false;
+    }
+    let newToken = JWTtoken.split("Bearer ")[1];
+    JWT.verify(newToken, process.env.SECRETKEY, (err, payload) => {
+      if (err) {
+        return false;
+      }
+
+      return payload;
+    });
+  },
+
   authentication: (req, res, next) => {
     if (!req.headers["x-web-user"]) {
       return next(
@@ -69,8 +84,8 @@ module.exports = {
     }
     const userId = req.headers["x-web-user"];
     req.payload = {
-      userId
-    }
+      userId,
+    };
     next();
   },
 

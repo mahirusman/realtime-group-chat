@@ -58,14 +58,6 @@ app.use(
   })
 );
 
-// app.get("/", function (req, res, next) {
-//   res.render("index", { title: "Express" });
-// });
-
-// app.get("/reset-password", function (req, res, next) {
-//   res.render("index", { title: "Reset Password" });
-// });
-
 app.use("/chatheads", chatheadsRoutes);
 app.use("/messages", messageRoutes);
 
