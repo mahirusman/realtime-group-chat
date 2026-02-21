@@ -8,6 +8,7 @@ var app = require("../app");
 var debug = require("debug")("nft-associates-backend:server");
 var http = require("http");
 var socketAPI = require("../socket");
+const { corsOriginValidator } = require("../utils/cors");
 /**
  * Get port from environment and store in Express.
  */
@@ -23,9 +24,9 @@ var server = http.createServer(app);
 
 socketAPI.io.attach(server, {
   cors: {
-    origin: "*",
-
+    origin: corsOriginValidator,
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 

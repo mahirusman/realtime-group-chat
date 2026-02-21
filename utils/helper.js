@@ -58,17 +58,23 @@ module.exports = {
   },
 
   isValidToken: (JWTtoken) => {
-    if (!JWTtoken) {
+    if (!JWTtoken || typeof JWTtoken !== "string") {
       return false;
     }
-    let newToken = JWTtoken.split("Bearer ")[1];
-    JWT.verify(newToken, process.env.SECRETKEY, (err, payload) => {
-      if (err) {
-        return false;
-      }
 
-      return payload;
-    });
+    const newToken = JWTtoken.startsWith("Bearer ")
+      ? JWTtoken.split("Bearer ")[1]
+      : JWTtoken;
+
+    if (!newToken) {
+      return false;
+    }
+
+    try {
+      return JWT.verify(newToken, process.env.SECRETKEY);
+    } catch (error) {
+      return false;
+    }
   },
 
   authentication: (req, res, next) => {
@@ -116,9 +122,24 @@ module.exports = {
     }
   },
   decodeToken: (token) => {
-    return JWT.verify(token, process.env.SECRETKEY, (err, payload) => {
-      return payload.userId;
-    });
+    if (!token || typeof token !== "string") {
+      return null;
+    }
+
+    const normalizedToken = token.startsWith("Bearer ")
+      ? token.split("Bearer ")[1]
+      : token;
+
+    if (!normalizedToken) {
+      return null;
+    }
+
+    try {
+      const payload = JWT.verify(normalizedToken, process.env.SECRETKEY);
+      return payload?.userId || null;
+    } catch (error) {
+      return null;
+    }
   },
 };
 

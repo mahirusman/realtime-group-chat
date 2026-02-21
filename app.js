@@ -11,32 +11,15 @@ var cron = require("node-cron");
 const chatheadsRoutes = require("./app/chatHeads/route");
 const messageRoutes = require("./app/message/route");
 const socketApi = require("./socket");
+const { corsOriginValidator } = require("./utils/cors");
 
 var app = express();
 
 // view engine setup
 // app.set("views", path.join(__dirname, "views"));
 // app.set("view engine", "jade");
-const whitelist = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "https://dev.hutfin.com",
-  "https://stag.hutfin.com",
-  "https://hutfin.com",
-  "*hutfin.com",
-  "https://dev-sso.hutfin.com",
-  "http://localhost:6066",
-  "https://dev-list.hutfin.com",
-  "https://stg-list.hutfin.com",
-];
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: corsOriginValidator,
   credentials: true,
 };
 
