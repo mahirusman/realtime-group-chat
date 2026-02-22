@@ -1,14 +1,15 @@
-const whitelist = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "http://localhost:6066",
-  "https://dev.hutfin.com",
-  "https://stag.hutfin.com",
-  "https://hutfin.com",
-  "https://dev-sso.hutfin.com",
-  "https://dev-list.hutfin.com",
-  "https://stg-list.hutfin.com",
-];
+const parseEnvList = (value) => {
+  if (!value || typeof value !== "string") {
+    return [];
+  }
+
+  return value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+};
+
+const whitelist = parseEnvList(process.env.CORS_WHITELIST);
 
 const whitelistPatterns = [/^https?:\/\/([a-z0-9-]+\.)?hutfin\.com$/i];
 
